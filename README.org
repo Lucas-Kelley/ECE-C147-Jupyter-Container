@@ -1,0 +1,59 @@
+#+title: Jupyter Notebook Docker Container
+
+* Instructions
+The docker image can both be pulled from the github container repository using the command.
+#+begin_src bash
+  docker pull ghcr.io/lucas-kelley/ece-c147-jupyter:latest
+#+end_src
+
+** Build locally
+The docker image can also be built locally from within the repository directory using the following command.
+#+begin_src bash
+  docker build -f Dockerfile --tag [IMAGE_NAME] .
+#+end_src
+
+** Usage
+After either building or pulling the docker image to run a jupyter notebook and access it from your local machine
+1) Run the docker image with the directory where the notebook is located mounted to =/notebook= within the container and open the port =8888= into the container.
+   
+   e.g.
+   #+begin_src bash
+     docker run --rm -itdp 8888:8888 --name '[CONTAINER_NAME]' -v [DIR_PATH]:/notebook [IMAGE_NAME]
+   #+end_src
+   Where:
+   - =[CONTAINER_NAME]= is the name of your container
+   - =[DIR_PATH]= is the path to the directory where the jupyter notebook is located
+   - =[IMAGE_NAME]= is the name of the docker image to run, which would be =ghcr.io/lucas-kelley/ece-c147-jupyter= if pulled.
+Be sure to replace =[CONTAINER_NAME]= with your container name, and =[DIR_PATH]= with the path to the directory where the notebook is located.
+
+
+* Dockerfile Overview
+The Dockerfile base image is ubuntu:22.04 for continued long term support.
+#+begin_src docker :tangle "Dockerfile"
+  FROM ubuntu:22.04
+#+end_src
+
+We then setup the timezone information to avoid being prompted when installing packages and install the packages.
+#+begin_src docker :tangle "Dockerfile"
+  RUN ln -snf /usr/share/zoneinfo/$CONTAINER_TIMEZONE /etc/localtime && echo $CONTAINER_TIMEZONE > /etc/timezone
+  RUN apt update && apt install -y python3 python3-pip pandoc texlive-xetex
+#+end_src
+
+After that the requirements specified for ece c147 jupyter notebooks are installed.
+#+begin_src docker :tangle "Dockerfile"
+  COPY requirements.txt /src/pip_reqs/
+  RUN python3 -m pip install -r /src/pip_reqs/requirements.txt
+#+end_src
+
+Then we add the default user =anon= and setup the configuration for the jupyter notebook.
+#+begin_src docker :tangle "Dockerfile"
+  RUN useradd -ms /bin/bash anon
+  COPY --chown=anon jupyter_server_config.json /home/anon/.jupyter/
+  USER anon
+#+end_src
+
+Finally the working directory gets set as =/notebook= and the entrypoint is set to start the jupyter notebook binding the ip to =0.0.0.0=.
+#+begin_src docker :tangle "Dockerfile"
+  WORKDIR /notebook
+  ENTRYPOINT ["jupyter", "notebook", "--ip", "0.0.0.0"]
+#+end_src
