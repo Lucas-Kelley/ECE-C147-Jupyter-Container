@@ -1,19 +1,21 @@
 #+title: Jupyter Notebook Docker Image
 
 * Instructions
-The docker image can both be pulled from the github container repository using the command.
+The docker image can either be pulled from the GitHub container registry, or built locally after cloning this repository.
+** Pulling from GHCR
+The docker image can be pulled GHCR using the following command.
 #+begin_src bash
   docker pull ghcr.io/lucas-kelley/ece-c147-jupyter:latest
 #+end_src
 
 ** Build locally
-The docker image can also be built locally from within the repository directory using the following command.
+It can also be built locally (if that's more your speed) from within the repository directory using the following command.
 #+begin_src bash
   docker build -f Dockerfile --tag [IMAGE_NAME] .
 #+end_src
 
 ** Usage
-After either building or pulling the docker image to run a Jupyter notebook and access it from your local machine
+After either building or pulling the docker image to run a Jupyter notebook and access it from your local machine I have outlined the following steps.
 1) Run the docker image with the directory where the notebook is located mounted to =/notebook= within the container and open the port =8888= into the container.
    
    e.g.
