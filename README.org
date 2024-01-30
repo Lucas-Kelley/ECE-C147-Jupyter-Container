@@ -3,10 +3,13 @@
 * Instructions
 The docker image can either be pulled from the GitHub container registry, or built locally after cloning this repository.
 ** Pulling from GHCR
-The docker image can be pulled GHCR using the following command.
+The docker image can be pulled GHCR using the following command. Where =[ARCHITECTURE]= is your computers architecture, if running on a Mac with apple silicon (M1, M2, M3) this would be =arm64= if running on any other platform this would be =amd64=.
 #+begin_src bash
-  docker pull ghcr.io/lucas-kelley/ece-c147-jupyter:latest
+  docker pull ghcr.io/lucas-kelley/ece-c147-jupyter:[ARCHITECTURE]
+  # e.g. for Mac (Apple silicon)
+  docker pull ghcr.io/lucas-kelley/ece-c147-jupyter:arm64
 #+end_src
+- NOTE: if you do not specify a tag when pulling the image it will default to the tag =latest= which is equivalent to =arm64= meaning the arm version of the image will be pulled.
 
 ** Build locally
 It can also be built locally (if that's more your speed) from within the repository directory using the following command.
