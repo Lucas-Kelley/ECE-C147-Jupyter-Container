@@ -43,3 +43,4 @@ wcwidth
 webencodings
 widgetsnbextension
 wmctrl
+Cython

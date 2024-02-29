@@ -38,6 +38,19 @@ After either building or pulling the docker image to run a Jupyter notebook and 
    #+end_src
 
 
+** Fix for homework 5
+In order to get homework 5 to properly work make sure to download the fixed =im2col_cython.pyx=
+[here](https://piazza.com/redirect/s3?bucket=uploads&prefix=paste%2Fktz5qi1wsal4y2%2F9c4d1bfcdaf233ffb2b6e61c155ce229f426b0107fd66980b3bff4b057445c68%2Fim2col_cython.pyx) and replace the one downloaded with homework 5.
+
+In order to run the =cython= command you have to exec it within the container so that it gets built for the containers architecture. This is done by running the following command with the container running and the homework 5 notebook directory mounted.
+#+begin_src bash
+  docker exec -it ece bash -c "cd [./relative/path/to/utils]; python3 setup.py build_ext --inplace"
+  # for example if you have the HW5_code directory mounted then just
+  # copy paste the following command after replacing the im2col_cython.pyx file in utils
+  docker exec -it ece bash -c "cd utils; python3 setup.py build_ext --inplace"
+#+end_src
+
+
 * Dockerfile Overview
 The Dockerfile base image is ubuntu:22.04 because why the fuck not.
 #+begin_src docker :tangle "Dockerfile"
