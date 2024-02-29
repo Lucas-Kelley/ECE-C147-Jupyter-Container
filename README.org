@@ -11,11 +11,13 @@ The docker image can be pulled GHCR using the following command. Where =[ARCHITE
 #+end_src
 - NOTE: if you do not specify a tag when pulling the image it will default to the tag =latest= which is equivalent to =arm64= meaning the arm version of the image will be pulled.
 
+
 ** Build locally
 It can also be built locally (if that's more your speed) from within the repository directory using the following command.
 #+begin_src bash
   docker build -f Dockerfile --tag [IMAGE_NAME] .
 #+end_src
+
 
 ** Usage
 After either building or pulling the docker image to run a Jupyter notebook and access it from your local machine I have outlined the following steps.
@@ -30,8 +32,8 @@ After either building or pulling the docker image to run a Jupyter notebook and 
    - =[DIR_PATH]= is the path to the directory where the Jupyter notebook is located
    - =[IMAGE_NAME]= is the name of the docker image to run, which would be =ghcr.io/lucas-kelley/ece-c147-jupyter= if pulled.
    - =[PASSWORD]= is the password for the Jupyter notebook once it is running
-2) Open the Jupyter notebook by navigating to the URL =localhost:8888= within your browser.
-3) Enter the password where prompted as =[PASSWORD]=
+2) Open the Jupyter notebook by navigating to the URL [[http://localhost:8888/]] within your browser.
+3) Enter the password where prompted as =[PASSWORD]=, if you put the password as an empty string you will not be prompted to enter one.
 4) To stop the Jupyter container run the following command within your terminal.
    #+begin_src bash
      docker stop '[CONTAINER_NAME]'
@@ -39,12 +41,11 @@ After either building or pulling the docker image to run a Jupyter notebook and 
 
 
 ** Fix for homework 5
-In order to get homework 5 to properly work make sure to download the fixed =im2col_cython.pyx=
-[here](https://piazza.com/redirect/s3?bucket=uploads&prefix=paste%2Fktz5qi1wsal4y2%2F9c4d1bfcdaf233ffb2b6e61c155ce229f426b0107fd66980b3bff4b057445c68%2Fim2col_cython.pyx) and replace the one downloaded with homework 5.
-
-In order to run the =cython= command you have to exec it within the container so that it gets built for the containers architecture. This is done by running the following command with the container running and the homework 5 notebook directory mounted.
+In order to get homework 5 to properly work, make sure to download the fixed [[https://piazza.com/redirect/s3?bucket=uploads&prefix=paste%2Fktz5qi1wsal4y2%2F9c4d1bfcdaf233ffb2b6e61c155ce229f426b0107fd66980b3bff4b057445c68%2Fim2col_cython.pyx][=im2col_cython.pyx=]] and replace the one downloaded with homework 5.
+To run the setup command you have to execute it within the container so that it gets built for the containers architecture.
+This is done by running the following command with the container running and the homework 5 notebook directory mounted.
 #+begin_src bash
-  docker exec -it ece bash -c "cd [./relative/path/to/utils]; python3 setup.py build_ext --inplace"
+  docker exec -it ece bash -c "cd [relative/path/to/utils]; python3 setup.py build_ext --inplace"
   # for example if you have the HW5_code directory mounted then just
   # copy paste the following command after replacing the im2col_cython.pyx file in utils
   docker exec -it ece bash -c "cd utils; python3 setup.py build_ext --inplace"
