@@ -41,7 +41,7 @@ After either building or pulling the docker image to run a Jupyter notebook and 
 
 
 ** Fix for homework 5
-In order to get homework 5 to properly work, make sure to download the fixed [[https://piazza.com/redirect/s3?bucket=uploads&prefix=paste%2Fktz5qi1wsal4y2%2F9c4d1bfcdaf233ffb2b6e61c155ce229f426b0107fd66980b3bff4b057445c68%2Fim2col_cython.pyx][=im2col_cython.pyx=]] and replace the one downloaded with homework 5.
+In order to get homework 5 to properly work, make sure to download the fixed [[https://piazza.com/redirect/s3?bucket=uploads&prefix=paste%2Fktz5qi1wsal4y2%2F9c4d1bfcdaf233ffb2b6e61c155ce229f426b0107fd66980b3bff4b057445c68%2Fim2col_cython.pyx][=im2col_cython.pyx=]] (credit to Mauricio on [[https://piazza.com/class/lr6plmihzvi3ep/post/804][Piazza 804]]) and replace the one downloaded with homework 5.
 To run the setup command you have to execute it within the container so that it gets built for the containers architecture.
 This is done by running the following command with the container running and the homework 5 notebook directory mounted.
 #+begin_src bash
