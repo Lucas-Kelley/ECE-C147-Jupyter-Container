@@ -70,15 +70,16 @@ After that the requirements specified for ece c147 Jupyter notebooks are install
   RUN python3 -m pip install -r /src/pip_reqs/requirements.txt
 #+end_src
 
-Then we add the default user =anon= and copy the entrypoint script into the image.
+Then we add the default user =anon= and copy the entrypoint script along with the notebooks into the image.
 #+begin_src docker :tangle "Dockerfile"
   RUN useradd -ms /bin/bash anon
   COPY --chown=anon entrypoint.sh /run/
+  COPY --chown=anon notebooks /src/notebooks
   USER anon
 #+end_src
 
 Finally the working directory gets set as =/notebook= and the entrypoint is set as the =entrypoint.sh= script.
 #+begin_src docker :tangle "Dockerfile"
-  WORKDIR /notebook
+  WORKDIR /notebooks
   ENTRYPOINT ["/run/entrypoint.sh"]
 #+end_src

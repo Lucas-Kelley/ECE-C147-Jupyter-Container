@@ -8,7 +8,8 @@ RUN python3 -m pip install -r /src/pip_reqs/requirements.txt
 
 RUN useradd -ms /bin/bash anon
 COPY --chown=anon entrypoint.sh /run/
+COPY --chown=anon notebooks /src/notebooks
 USER anon
 
-WORKDIR /notebook
+WORKDIR /notebooks
 ENTRYPOINT ["/run/entrypoint.sh"]

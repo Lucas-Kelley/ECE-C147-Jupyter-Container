@@ -1,0 +1,13 @@
+version: '1.0'
+services:
+  jupyter:
+    image: ghcr.io/lucas-kelley/ece-c147-jupyter:testing
+    expose:
+      - 8888
+    ports:
+      - "8888:8888"
+    environment:
+      HW: ${HW}
+      PASSWD: ${PASSWD}
+    volumes:
+      - ./notebooks:/notebook
