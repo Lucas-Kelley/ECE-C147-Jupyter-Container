@@ -1,0 +1,20 @@
+#!/bin/bash
+
+FILE_NAME="$1"
+NUM_BLOCKS=$2
+
+touch "$FILE_NAME"
+
+i=1
+cat $HOME/ECE-C147-Jupyter-Container/bin/assets/file_start > "$FILE_NAME"
+while [[ $i -lt $NUM_BLOCKS ]]; do
+    cat $HOME/ECE-C147-Jupyter-Container/bin/assets/block >> "$FILE_NAME"
+    i=$((i + 1))
+
+    if [[ $i -eq $NUM_BLOCKS ]]; then
+        cat $HOME/ECE-C147-Jupyter-Container/bin/assets/block_end >> "$FILE_NAME"
+    fi
+done
+cat $HOME/ECE-C147-Jupyter-Container/bin/assets/file_end >> "$FILE_NAME"
+
+exit

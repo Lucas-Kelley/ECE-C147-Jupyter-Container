@@ -64,9 +64,11 @@ if test -f $TARGET_FILE; then
     esac
 fi
 
-# If the template generator doesn't exist, make it.
-if ! test -f "$CONTAINER_ROOT/ipynb-generator"; then
-    $(cd "$CONTAINER_ROOT/bin/" && make)
+if [[ $3 -eq 1 ]]; then
+    # If the template generator doesn't exist, make it.
+    if ! test -f "$CONTAINER_ROOT/ipynb-generator"; then
+        $(cd "$CONTAINER_ROOT/bin/" && make)
+    fi
 fi
 
 # Generate the template file. See ipynb-generator.c for details.
@@ -120,7 +122,7 @@ done
 python -mjson.tool $TARGET_FILE > /dev/null
 if [ $? -ne 0 ]; then
     echo "Failed to create PDF. Cleaning up and exiting..."
-    rm $TARGET_FILE
+    # rm $TARGET_FILE
     exit 1
 fi
 
